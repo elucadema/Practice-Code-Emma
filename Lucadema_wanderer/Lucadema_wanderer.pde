@@ -1,39 +1,36 @@
+PVector loc;
+PVector vel;
+PVector acc;
 float sz = 50;
-float locX = width/2;
-float locY = height/2;
-float velX = 0;
-float velY = 0;
-float accY = random(-.1, .1);
-float accX = random(-.1, .1);
+
 void setup() {
   size(800, 600);
   colorMode(HSB, 360, 100, 100);
   noStroke();
-  
+  loc = new PVector(width/2, height/2);
+  vel = new PVector(0, 0);
+  acc = new PVector(random(-.3, .3), random(-.3, 3));
 }
 
 void draw() {
   fill(frameCount%360, 19, 99);
-  accY = random(-.1, .1);
-  accX = random(-.1, .1);
+ 
+  vel.add(acc);
+  loc.add(vel);
 
-  velX += accX;
-  velY += accY;
-  locX += velX;
-  locY += velY;
 
-  ellipse(locX, locY, sz, sz);
-if(locX > width){
-  locX = 0;
+  ellipse(loc.x, loc.y, sz, sz);
+  if (loc.x > width) {
+    loc.x = 0;
   }
-if(locY > height){
-  locY = 0;}
-  if(locX < 0){
-    locX = width;
+  if (loc.y > height) {
+    loc.y = 0;
   }
-  if(locY < 0){
-    locY = height;
+  if (loc.x < 0) {
+    loc.x = width;
+  }
+  if (loc.y < 0) {
+    loc.y = height;
   }
 }
-
 
