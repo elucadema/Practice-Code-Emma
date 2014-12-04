@@ -1,33 +1,48 @@
-GravityBall[] a = new GravityBall[10];
+GravityBall[] a = new GravityBall[100];
+
 void setup() {
   size(800, 600);
   for (int i = 0; i < a.length; i++) {
-    a[i] = new GravityBall();
+    a[i] = new GravityBall(random(100));
     colorMode(HSB, 360, 100, 100, 100);
-    
   }
 }
+
 void draw() {
   background(0);
   for (int i = 0; i < a.length; i++) {
     a[i].move();
     a[i].bounce();
     a[i].display();
-
   }
 }
 class GravityBall {
-  float sz;
+  float sz, hue, sat, bright, alpha;
   PVector loc, vel, acc;
   GravityBall() {
     sz = random(10, 100); 
-    loc = new PVector(width/2, height/2);
+    loc = new PVector(random(sz, width - sz/2), random(sz, height - sz/2));
     vel = PVector.random2D();
     acc = new PVector(0, .1);
+    hue = random(360);
+    sat = 53;
+    bright = 93;
+        alpha = 50;
+  }
+  GravityBall(float tempsz) {
+    sz = tempsz; 
+    loc = new PVector(random(sz, width - sz/2), random(sz, height - sz/2));
+    vel = PVector.random2D();
+    acc = new PVector(0, .1);    
+    hue = random(360);
+    sat = 53;
+    bright = 93;
+    alpha = 50;
   }
   void display() {
+    fill(hue, sat, bright, alpha);
     ellipse(loc.x, loc.y, sz, sz);
-  fill(frameCount%random(360), 70, 97 , 100);}
+  }
 
   void move() {
     vel.add(acc);
