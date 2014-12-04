@@ -14,6 +14,7 @@ void draw() {
     a[i].move();
     a[i].bounce();
     a[i].display();
+    a[i].collideWith();
   }
 }
 class GravityBall {
@@ -27,7 +28,7 @@ class GravityBall {
     hue = random(360);
     sat = 53;
     bright = 93;
-        alpha = 50;
+    alpha = 50;
   }
   GravityBall(float tempsz) {
     sz = tempsz; 
@@ -55,6 +56,12 @@ class GravityBall {
     if (loc.y + sz/2 > height || loc.y - sz/2 < 0) {
       loc.y = height - sz/2;
       vel.y *= -1;
+    }
+  }
+  void collideWith(GravityBall other) {
+    if (loc.dist(other.loc) < sz/2 + other.sz/2) {
+      vel = PVector.sub(loc, other.loc);
+      vel.normalize();
     }
   }
 }
